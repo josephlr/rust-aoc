@@ -15,7 +15,7 @@ fn sum_matching(pairs: impl Iterator<Item = (u8, u8)>) -> i32 {
     pairs.filter(|p| p.0 == p.1).map(|p| p.0 as i32).sum()
 }
 
-pub struct Sequential();
+pub struct Sequential;
 impl Ans for Sequential {
     type Value = i32;
     fn compute(&self, r: impl BufRead) -> i32 {
@@ -27,7 +27,7 @@ impl Ans for Sequential {
     }
 }
 
-pub struct Halfway();
+pub struct Halfway;
 impl Ans for Halfway {
     type Value = i32;
     fn compute(&self, r: impl BufRead) -> i32 {

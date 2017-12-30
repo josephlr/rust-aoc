@@ -16,7 +16,7 @@ trait Checksum {
     }
 }
 
-pub struct MinMaxDiff();
+pub struct MinMaxDiff;
 impl Checksum for MinMaxDiff {
     fn checksum(iter: impl Iterator<Item = i32>) -> i32 {
         match iter.minmax() {
@@ -27,7 +27,7 @@ impl Checksum for MinMaxDiff {
     }
 }
 
-pub struct EvenDiv();
+pub struct EvenDiv;
 impl Checksum for EvenDiv {
     fn checksum(iter: impl Iterator<Item = i32>) -> i32 {
         let v = iter.collect_vec();

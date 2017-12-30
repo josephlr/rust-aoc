@@ -61,10 +61,10 @@ fn main() {
     print!("AoC {} - Day {} - Part {}:\n\n", year, day, part);
 
     match (year, day, part) {
-        (2017, 1, 1) => run(matching_digits::Sequential()),
-        (2017, 1, 2) => run(matching_digits::Halfway()),
-        (2017, 2, 1) => run(checksum::MinMaxDiff()),
-        (2017, 2, 2) => run(checksum::EvenDiv()),
+        (2017, 1, 1) => run(matching_digits::Sequential),
+        (2017, 1, 2) => run(matching_digits::Halfway),
+        (2017, 2, 1) => run(checksum::MinMaxDiff),
+        (2017, 2, 2) => run(checksum::EvenDiv),
         _ => {
             println!("No solution found for this question.");
             exit(1)
