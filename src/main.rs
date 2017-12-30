@@ -1,21 +1,21 @@
 #![feature(conservative_impl_trait)]
 #![feature(universal_impl_trait)]
-#![feature(exact_size_is_empty)]
 #![feature(nll)]
+
+// rust-lang/rust#46959
+#![allow(non_camel_case_types)]
 
 extern crate itertools;
 extern crate num;
 
-mod ans;
+mod util;
 mod matching_digits;
 mod checksum;
 
 use std::env::{args, Args};
-use std::fmt::Display;
 use std::io::stdin;
 use std::process::exit;
-use std::str::FromStr;
-use ans::Ans;
+use util::{Ans, Parseable};
 
 macro_rules! show_usage {
     ($a:expr) => ({
@@ -41,17 +41,11 @@ impl CommandLine {
         CommandLine { bin_name, arg_iter }
     }
 
-    fn parse_next<F>(&mut self, arg_name: &str) -> F
-    where
-        F: FromStr,
-        F::Err: Display,
-    {
+    fn parse_next<P: Parseable>(&mut self, arg_name: &str) -> P {
         if let Some(arg) = self.arg_iter.next() {
-            arg.parse().unwrap_or_else(|e| {
-                show_usage!(&self, "argument <{}>: {}", arg_name, e)
-            })
+            P::parse(&arg).unwrap_or_else(|e| show_usage!(&self, "argument <{}>: {}", arg_name, e))
         } else {
-            show_usage!(&self, "argument <{}>: not provided", arg_name)
+            show_usage!(&self, "argument <{}> not provided", arg_name)
         }
     }
 }
