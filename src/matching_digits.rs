@@ -4,12 +4,11 @@ use itertools::Itertools;
 use util::Ans;
 
 fn digits(r: impl BufRead) -> impl Iterator<Item = u8> {
-    r.bytes()
-        .filter_map(|b| match b.unwrap() {
-                        b @ b'0'...b'9' => Some(b - b'0'),
-                        b'\n' => None,
-                        b => panic!("Found non-digit {:?} in input", b as char),
-                    })
+    r.bytes().filter_map(|b| match b.unwrap() {
+        b @ b'0'...b'9' => Some(b - b'0'),
+        b'\n' => None,
+        b => panic!("Found non-digit {:?} in input", b as char),
+    })
 }
 
 fn sum_matching(pairs: impl Iterator<Item = (u8, u8)>) -> i32 {

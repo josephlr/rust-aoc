@@ -18,7 +18,8 @@ pub trait Parseable: FromStr {
 }
 
 impl<T: FromStr> Parseable for T
-    where T::Err: Display
+where
+    T::Err: Display,
 {
     type Err = T::Err;
     fn parse(s: &str) -> Result<Self, <Self as Parseable>::Err> {
