@@ -1,4 +1,5 @@
 #![feature(conservative_impl_trait, universal_impl_trait)]
+#![feature(inclusive_range_syntax)]
 #![feature(nll)]
 #![allow(non_camel_case_types)] // rust-lang/rust#46959
 
