@@ -34,7 +34,7 @@ pub fn force_parse<P: Parseable>(s: &str) -> P {
 pub fn force_parse_line<P: Parseable>(r: &mut impl BufRead) -> P {
     let mut s = String::new();
     r.read_line(&mut s).unwrap();
-    force_parse(&s)
+    force_parse(s.trim())
 }
 
 pub trait Ans {

@@ -8,6 +8,7 @@ extern crate num;
 mod util;
 mod matching_digits;
 mod checksum;
+mod spiral_memory;
 
 use std::env::{args, Args};
 use std::io::stdin;
@@ -64,6 +65,8 @@ fn main() {
         (2017, 1, 2) => run(matching_digits::Halfway),
         (2017, 2, 1) => run(checksum::MinMaxDiff),
         (2017, 2, 2) => run(checksum::EvenDiv),
+        (2017, 3, 1) => run(spiral_memory::CountSteps),
+        (2017, 3, 2) => run(spiral_memory::FirstValue),
         _ => {
             println!("No solution found for this question.");
             exit(1)
