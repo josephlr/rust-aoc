@@ -1,6 +1,5 @@
 #![feature(conservative_impl_trait, universal_impl_trait)]
-#![feature(inclusive_range_syntax)]
-#![feature(nll)]
+#![feature(inclusive_range_syntax, nll, specialization)]
 #![allow(non_camel_case_types)] // rust-lang/rust#46959
 
 extern crate itertools;
@@ -49,7 +48,7 @@ impl CommandLine {
     }
 }
 
-fn run(ans: impl Ans) {
+fn run<Phantom>(ans: impl Ans<Phantom>) {
     let s = stdin();
     println!("{}", ans.compute(s.lock()));
 }

@@ -37,7 +37,7 @@ pub fn force_parse_line<P: Parseable>(r: &mut impl BufRead) -> P {
     force_parse(s.trim())
 }
 
-pub trait Ans {
+pub trait Ans<Phantom = ()> {
     type Value: Display;
     fn compute(&self, r: impl BufRead) -> Self::Value;
 }

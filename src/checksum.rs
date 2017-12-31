@@ -3,17 +3,8 @@ use itertools::Itertools;
 use itertools::MinMaxResult::*;
 use util::{force_parse, Ans};
 
-trait Checksum {
+pub trait Checksum {
     fn checksum(iter: impl Iterator<Item = i32>) -> i32;
-    fn sum_checksums(r: impl BufRead) -> i32 {
-        r.lines()
-            .map(|line| {
-                let line = line.unwrap();
-                let iter = line.split_whitespace().map(force_parse);
-                Self::checksum(iter)
-            })
-            .sum()
-    }
 }
 
 pub struct MinMaxDiff;
@@ -48,16 +39,18 @@ impl Checksum for EvenDiv {
     }
 }
 
-// Cannot use a generic impl Ans here, as that would conflict with other impls.
-impl Ans for MinMaxDiff {
+impl<T: Checksum> Ans<Phantom> for T {
     type Value = i32;
     fn compute(&self, r: impl BufRead) -> i32 {
-        Self::sum_checksums(r)
+        r.lines()
+            .map(|line| {
+                let line = line.unwrap();
+                let iter = line.split_whitespace().map(force_parse);
+                Self::checksum(iter)
+            })
+            .sum()
     }
 }
-impl Ans for EvenDiv {
-    type Value = i32;
-    fn compute(&self, r: impl BufRead) -> i32 {
-        Self::sum_checksums(r)
-    }
-}
+
+#[allow(dead_code)]
+pub struct Phantom;
