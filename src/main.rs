@@ -11,6 +11,7 @@ mod checksum;
 mod spiral_memory;
 mod passwords;
 mod cpu_jumps;
+mod reallocation;
 
 use std::env::{args, Args};
 use std::io::stdin;
@@ -73,6 +74,8 @@ fn main() {
         (2017, 4, 2) => run(passwords::NoAnagrams),
         (2017, 5, 1) => run(cpu_jumps::Adjust(|x| x + 1)),
         (2017, 5, 2) => run(cpu_jumps::Adjust(|x| if x < 3 { x + 1 } else { x - 1 })),
+        (2017, 6, 1) => run(reallocation::RepeatIdx),
+        (2017, 6, 2) => run(reallocation::CycleCount),
         _ => {
             println!("No solution found for this question.");
             exit(1)
