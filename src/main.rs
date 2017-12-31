@@ -10,6 +10,7 @@ mod matching_digits;
 mod checksum;
 mod spiral_memory;
 mod passwords;
+mod cpu_jumps;
 
 use std::env::{args, Args};
 use std::io::stdin;
@@ -70,6 +71,8 @@ fn main() {
         (2017, 3, 2) => run(spiral_memory::FirstValue),
         (2017, 4, 1) => run(passwords::NoDuplicates),
         (2017, 4, 2) => run(passwords::NoAnagrams),
+        (2017, 5, 1) => run(cpu_jumps::Adjust(|x| x + 1)),
+        (2017, 5, 2) => run(cpu_jumps::Adjust(|x| if x < 3 { x + 1 } else { x - 1 })),
         _ => {
             println!("No solution found for this question.");
             exit(1)
