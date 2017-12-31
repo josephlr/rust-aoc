@@ -48,7 +48,7 @@ impl Checksum for EvenDiv {
     }
 }
 
-// Cannot use a generic impl Ans here as that would conflict with other mods.
+// Cannot use a generic impl Ans here, as that would conflict with other impls.
 impl Ans for MinMaxDiff {
     type Value = i32;
     fn compute(&self, r: impl BufRead) -> i32 {

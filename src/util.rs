@@ -10,7 +10,7 @@ use std::str::FromStr;
 // impl<T: FromStr> Parseable for T where T::Err: Display {}
 // ```
 //
-// and then use `s.parse()` instead of `P::parse(&s)`.
+// and then use `s.parse()::<P>` instead of `P::parse(&s)`.
 // However, rust-lang/rust#44491 prevents this from actually working.
 pub trait Parseable: FromStr {
     type Err: Display;

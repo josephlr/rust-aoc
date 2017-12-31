@@ -4,6 +4,8 @@ version = "0.1.0"
 authors = ["Joseph Richey <joerichey94@google.com>"]
 
 [dependencies]
-lazy_static = "1.0"
 itertools = "0.7"
 num = "0.1"
+
+[profile.release]
+lto = true
