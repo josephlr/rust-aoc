@@ -9,6 +9,7 @@ mod util;
 mod matching_digits;
 mod checksum;
 mod spiral_memory;
+mod passwords;
 
 use std::env::{args, Args};
 use std::io::stdin;
@@ -67,6 +68,8 @@ fn main() {
         (2017, 2, 2) => run(checksum::EvenDiv),
         (2017, 3, 1) => run(spiral_memory::CountSteps),
         (2017, 3, 2) => run(spiral_memory::FirstValue),
+        (2017, 4, 1) => run(passwords::NoDuplicates),
+        (2017, 4, 2) => run(passwords::NoAnagrams),
         _ => {
             println!("No solution found for this question.");
             exit(1)
