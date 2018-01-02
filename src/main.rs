@@ -12,6 +12,7 @@ mod spiral_memory;
 mod passwords;
 mod cpu_jumps;
 mod reallocation;
+mod circus;
 
 use std::env::{args, Args};
 use std::io::stdin;
@@ -76,6 +77,8 @@ fn main() {
         (2017, 5, 2) => run(cpu_jumps::Adjust(|x| if x < 3 { x + 1 } else { x - 1 })),
         (2017, 6, 1) => run(reallocation::RepeatIdx),
         (2017, 6, 2) => run(reallocation::CycleCount),
+        (2017, 7, 1) => run(circus::RootName),
+        (2017, 7, 2) => run(circus::CorrectWeight),
         _ => {
             println!("No solution found for this question.");
             exit(1)
