@@ -3,29 +3,14 @@ use std::io;
 use std::ops;
 use std::str;
 
-pub trait Parseable {
-    fn parse_or_else<P, F>(&self, op: F) -> P
-    where
-        P: str::FromStr,
-        F: FnOnce(P::Err) -> P;
-}
-
-impl Parseable for str {
-    fn parse_or_else<P, F>(&self, op: F) -> P
-    where
-        P: str::FromStr,
-        F: FnOnce(P::Err) -> P,
-    {
-        self.parse().unwrap_or_else(op)
-    }
-}
-
 pub fn force_parse<P>(input: impl ops::Deref<Target = str>) -> P
 where
     P: str::FromStr,
     P::Err: fmt::Display,
 {
-    input.parse_or_else(|e| panic!("Could not parse {:?}: {}", input.deref(), e))
+    input
+        .parse()
+        .unwrap_or_else(|e| panic!("Could not parse {:?}: {}", input.deref(), e))
 }
 
 pub fn force_string(mut r: impl io::BufRead) -> String {
