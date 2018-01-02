@@ -1,7 +1,7 @@
 use std::io::BufRead;
 use itertools::Itertools;
 use itertools::MinMaxResult::*;
-use util::{force_parse, Ans};
+use util::{force_lines, force_parse, Ans, IterUtil};
 
 pub trait Checksum {
     fn checksum(iter: impl Iterator<Item = i32>) -> i32;
@@ -22,31 +22,28 @@ pub struct EvenDiv;
 impl Checksum for EvenDiv {
     fn checksum(iter: impl Iterator<Item = i32>) -> i32 {
         let v = iter.collect_vec();
-        let mut iter = v.iter().tuple_combinations().filter_map(|(a, b)| {
-            if a % b == 0 {
-                Some(a / b)
-            } else if b % a == 0 {
-                Some(b / a)
-            } else {
-                None
-            }
-        });
-        match (iter.next(), iter.next()) {
-            (None, _) => panic!("No even divisors found"),
-            (Some(ans), None) => ans,
-            (Some(_), Some(_)) => panic!("Multiple even divisors found"),
-        }
+        v.iter()
+            .tuple_combinations()
+            .filter_map(|(a, b)| {
+                if a % b == 0 {
+                    Some(a / b)
+                } else if b % a == 0 {
+                    Some(b / a)
+                } else {
+                    None
+                }
+            })
+            .force_single()
     }
 }
 
 impl<T: Checksum> Ans<Phantom> for T {
     type Value = i32;
     fn compute(&self, r: impl BufRead) -> i32 {
-        r.lines()
+        force_lines(r)
             .map(|line| {
-                let line = line.unwrap();
-                let iter = line.split_whitespace().map(force_parse);
-                Self::checksum(iter)
+                let nums = line.split_whitespace().map(force_parse);
+                Self::checksum(nums)
             })
             .sum()
     }

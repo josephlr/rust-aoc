@@ -2,7 +2,7 @@ use std::collections::HashSet;
 use std::hash::Hash;
 use std::io::BufRead;
 use itertools::Itertools;
-use util::Ans;
+use util::{force_lines, Ans, IterUtil};
 
 pub trait Validator {
     fn is_valid<'a>(password: impl Iterator<Item = &'a str>) -> bool;
@@ -34,12 +34,7 @@ impl Validator for NoAnagrams {
 impl<T: Validator> Ans<Phantom> for T {
     type Value = usize;
     fn compute(&self, r: impl BufRead) -> usize {
-        r.lines()
-            .filter(|line| {
-                let line = line.as_ref().unwrap();
-                Self::is_valid(line.split_whitespace())
-            })
-            .count()
+        force_lines(r).count_which(|line| Self::is_valid(line.split_whitespace()))
     }
 }
 

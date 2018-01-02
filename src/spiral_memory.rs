@@ -1,6 +1,6 @@
 use std::cmp::max;
 use std::io::BufRead;
-use util::{force_parse_line, Ans};
+use util::{force_parse, force_string, Ans};
 
 // Returns n s.t. x ∈ [n^2, (n+1)^2)
 // Note: this would not work for an i64 as f64 only has 53 bits of precision.
@@ -43,8 +43,8 @@ fn to_spiral(x: i32, y: i32) -> usize {
 pub struct CountSteps;
 impl Ans for CountSteps {
     type Value = i32;
-    fn compute(&self, mut r: impl BufRead) -> i32 {
-        let (x, y) = to_point(force_parse_line(&mut r));
+    fn compute(&self, r: impl BufRead) -> i32 {
+        let (x, y) = to_point(force_parse(force_string(r)));
         x.abs() + y.abs()
     }
 }
@@ -84,8 +84,8 @@ impl Iterator for SpiralIter {
 pub struct FirstValue;
 impl Ans for FirstValue {
     type Value = usize;
-    fn compute(&self, mut r: impl BufRead) -> usize {
-        let input = force_parse_line(&mut r);
+    fn compute(&self, r: impl BufRead) -> usize {
+        let input = force_parse(force_string(r));
         SpiralIter::default().filter(|&x| x > input).next().unwrap()
     }
 }

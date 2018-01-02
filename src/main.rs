@@ -18,17 +18,14 @@ mod circus;
 use std::env::{args, Args};
 use std::io::stdin;
 use std::process::exit;
-use util::{Ans, Parseable};
+use util::Ans;
 
 macro_rules! show_usage {
-    ($a:expr) => ({
-        eprintln!("USAGE:\n\t{} <year> <question> <part>", $a.bin_name);
-        exit(2)
-    });
     ($a:expr, $($arg:tt)+) => ({
         eprintln!($($arg)+);
         eprintln!();
-        show_usage!($a)
+        eprintln!("USAGE:\n\t{} <year> <question> <part>", $a.bin_name);
+        exit(2)
     });
 }
 
@@ -44,9 +41,10 @@ impl CommandLine {
         CommandLine { bin_name, arg_iter }
     }
 
-    fn parse_next<P: Parseable>(&mut self, arg_name: &str) -> P {
+    fn parse_next(&mut self, arg_name: &str) -> i32 {
         if let Some(arg) = self.arg_iter.next() {
-            P::parse(&arg).unwrap_or_else(|e| show_usage!(&self, "argument <{}>: {}", arg_name, e))
+            arg.parse()
+                .unwrap_or_else(|e| show_usage!(&self, "argument <{}>: {:?}", arg_name, e))
         } else {
             show_usage!(&self, "argument <{}> not provided", arg_name)
         }

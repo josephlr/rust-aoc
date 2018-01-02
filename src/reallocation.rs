@@ -1,11 +1,13 @@
 use std::collections::{HashMap, HashSet};
 use std::io::BufRead;
 use itertools::Itertools;
-use util::{force_parse, Ans};
+use util::{force_parse, force_string, Ans};
 
 fn banks(r: impl BufRead) -> Vec<usize> {
-    let s = r.lines().next().expect("Input has no lines").unwrap();
-    s.split_whitespace().map(force_parse).collect_vec()
+    force_string(r)
+        .split_whitespace()
+        .map(force_parse)
+        .collect_vec()
 }
 
 fn reallocate(banks: &mut [usize]) {
