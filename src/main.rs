@@ -3,7 +3,8 @@
 #![allow(non_camel_case_types)] // rust-lang/rust#46959
 
 extern crate itertools;
-extern crate num;
+#[macro_use]
+extern crate nom;
 
 mod util;
 mod matching_digits;
