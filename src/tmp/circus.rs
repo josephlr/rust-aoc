@@ -2,7 +2,7 @@ use std::collections::{HashMap, HashSet};
 use std::io::BufRead;
 use std::str::FromStr;
 use nom::{alpha, digit};
-use util::{force_string, Ans};
+use util::{force_string, nom_unwrap, Ans};
 
 struct ProgData<'a> {
     weight: i32,
@@ -32,10 +32,7 @@ fn run<V>(r: impl BufRead, process: fn(Input) -> V) -> V {
 
     let mut programs = HashMap::new();
     for line in input.lines() {
-        let (rest, (name, data)) = program(line).unwrap();
-        if !rest.is_empty() {
-            panic!("Remaining input {:?}", rest);
-        }
+        let (name, data) = nom_unwrap(program(line));
         if programs.insert(name, data).is_some() {
             panic!("Duplicate parent {:?}", name);
         }
